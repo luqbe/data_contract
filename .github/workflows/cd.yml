@@ -31,6 +31,8 @@ jobs:
         env:
           DATACONTRACT_DATABRICKS_TOKEN: ${{ secrets.DAB_DEPLOY }}
           DATACONTRACT_DATABRICKS_HOST: ${{ vars.DAB_DEPLOY }}
+          DATACONTRACT_DATABRICKS_SERVER_HOSTNAME: ${{ vars.DAB_DEPLOY }}
+          DATACONTRACT_DATABRICKS_HTTP_PATH: ${{ vars.HOST_PATH }}
         run: |
           datacontract lint contract/datacontract.yml
           datacontract test contract/datacontract.yml --server production
