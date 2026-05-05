@@ -1,10 +1,8 @@
 name: Databricks DAB Deploy
 on:
   pull_request:
-    types:
-      - closed
-    branches:
-      - main
+    types: [closed]
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -14,7 +12,6 @@ permissions:
 jobs:
   CD:
     name: Databricks DAB Deploy
-    # Only run if the PR was merged (not just closed)
     if: github.event.pull_request.merged == true || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     environment: lab
@@ -22,38 +19,30 @@ jobs:
       - name: Git Checkout
         uses: actions/checkout@v4
 
-      # --- DATA CONTRACT PRE-DEPLOY CHECK ---
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.x'
-
+          python-version: '3.11'
 
       - name: Install Data Contract CLI
-        run: pip install datacontract-cli
+        run: pip install "datacontract-cli[databricks]"
 
       - name: Final Contract Validation
+        env:
+          DATACONTRACT_DATABRICKS_TOKEN: ${{ secrets.DAB_DEPLOY }}
+          DATACONTRACT_DATABRICKS_HOST: ${{ vars.DAB_DEPLOY }}
         run: |
-          # Ensuring the contract is valid before it becomes 'Production'
           datacontract lint resources/datacontract.yml
-      # ---------------------------------------
+          datacontract test resources/datacontract.yml --server production
 
-      - name: setup databricks cli
+      - name: Setup Databricks CLI
         uses: databricks/setup-cli@main
 
-      - name: DAB Validation
+      - name: DAB Validation & Deploy
         env:
           DATABRICKS_HOST: ${{ vars.DAB_DEPLOY }}
           DATABRICKS_TOKEN: ${{ secrets.DAB_DEPLOY }}
         run: |
-          cd ${{ github.workspace }}/demo
+          cd bundles
           databricks bundle validate -p lab -t lab
-
-      - name: DAB Deploy
-        env:
-          DATABRICKS_HOST: ${{ vars.DAB_DEPLOY }}
-          DATABRICKS_TOKEN: ${{ secrets.DAB_DEPLOY }}
-        run: |
-          cd ${{ github.workspace }}/bundles
-          # Deploying the pipeline that enforces the contract
           databricks bundle deploy -p lab -t lab --force
