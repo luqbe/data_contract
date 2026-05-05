@@ -34,7 +34,7 @@ jobs:
       - name: Final Contract Validation
         run: |
           # Ensuring the contract is valid before it becomes 'Production'
-          datacontract validate contracts/datacontract.yaml
+          datacontract validate contracts/datacontract.yml
       # ---------------------------------------
 
       - name: setup databricks cli
