@@ -35,7 +35,7 @@ jobs:
       - name: Final Contract Validation
         run: |
           # Ensuring the contract is valid before it becomes 'Production'
-          datacontract lint contract/datacontract.yml
+          datacontract lint resources/datacontract.yml
       # ---------------------------------------
 
       - name: setup databricks cli
@@ -54,6 +54,6 @@ jobs:
           DATABRICKS_HOST: ${{ vars.DAB_DEPLOY }}
           DATABRICKS_TOKEN: ${{ secrets.DAB_DEPLOY }}
         run: |
-          cd ${{ github.workspace }}/demo
+          cd ${{ github.workspace }}/bundles
           # Deploying the pipeline that enforces the contract
           databricks bundle deploy -p lab -t lab --force

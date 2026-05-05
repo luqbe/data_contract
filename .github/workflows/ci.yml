@@ -21,7 +21,7 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.x'
-          
+
 
       - name: Install Data Contract CLI
         run: pip install datacontract-cli
@@ -29,7 +29,7 @@ jobs:
       - name: Validate Data Contract
         run: |
           # Change path to where your contract is actually stored
-          datacontract lint contract/datacontract.yml
+          datacontract lint resources/datacontract.yml
       # --------------------------------------
 
       - name: setup databricks cli
@@ -40,5 +40,5 @@ jobs:
           DATABRICKS_HOST: ${{ vars.DAB_DEPLOY }} #DBX HOSTNAME
           DATABRICKS_TOKEN: ${{ secrets.DAB_DEPLOY }} #DBX TOKEN
         run: |
-          cd ${{ github.workspace }}/demo
+          cd ${{ github.workspace }}/bundles
           databricks bundle validate -p lab -t lab
