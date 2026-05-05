@@ -1,0 +1,43 @@
+name: Databricks DAB & Contract Validate
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  CI:
+    name: Databricks DAB & Contract Validation
+    runs-on: ubuntu-latest
+    environment: lab
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@v4
+
+      # --- NEW: DATA CONTRACT VALIDATION ---
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install Data Contract CLI
+        run: pip install datacontract-cli
+
+      - name: Validate Data Contract
+        run: |
+          # Change path to where your contract is actually stored
+          datacontract validate contracts/datacontract.yaml
+      # --------------------------------------
+
+      - name: setup databricks cli
+        uses: databricks/setup-cli@main
+
+      - name: DAB Validation
+        env:
+          DATABRICKS_HOST: ${{ vars.DAB_DEPLOY }} #DBX HOSTNAME
+          DATABRICKS_TOKEN: ${{ secrets.DAB_DEPLOY }} #DBX TOKEN
+        run: |
+          cd ${{ github.workspace }}/demo
+          databricks bundle validate -p lab -t lab
