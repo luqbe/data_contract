@@ -1,0 +1,15 @@
+id: 31dc0660-d7ee-478c-baed-446cafbb0dea
+pipeline_type: WORKSPACE
+name: demo_pipeline
+libraries:
+  - glob:
+      include: /Workspace/Users/emailisbena@gmail.com/New Pipeline 2026-05-05
+        09:39/transformations/**
+schema: orders_data
+continuous: false
+development: false
+photon: true
+channel: CURRENT
+catalog: data_contract_demo
+serverless: true
+root_path: /Workspace/Users/emailisbena@gmail.com/New Pipeline 2026-05-05 09:39
