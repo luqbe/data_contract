@@ -1,0 +1,28 @@
+id: urn:orders-contract
+version: 1.0.0
+name: orders_demo
+description: "Data contract for the orders table"
+
+# --- ADD THIS SECTION ---
+servers:
+  production:
+    type: databricks
+    endpoint: "/sql/1.0/warehouses/a87b6d986e3818f7"
+    catalog: data_contract_demo
+    schema: orders_data
+# ------------------------
+
+models:
+  orders_bronze: # This is the table name in Databricks
+    description: "The primary table for customer orders"
+    fields: # Use 'fields' instead of 'columns' for standard spec
+      order_id:
+        type: string
+        required: true
+        primary: true
+      total_amount:
+        type: string
+        required: true
+      customer_email:
+        type: string
+        format: email
