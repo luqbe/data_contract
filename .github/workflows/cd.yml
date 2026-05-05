@@ -32,8 +32,8 @@ jobs:
           DATACONTRACT_DATABRICKS_TOKEN: ${{ secrets.DAB_DEPLOY }}
           DATACONTRACT_DATABRICKS_HOST: ${{ vars.DAB_DEPLOY }}
         run: |
-          datacontract lint resources/datacontract.yml
-          datacontract test resources/datacontract.yml --server production
+          datacontract lint contract/datacontract.yml
+          datacontract test contract/datacontract.yml --server production
 
       - name: Setup Databricks CLI
         uses: databricks/setup-cli@main
