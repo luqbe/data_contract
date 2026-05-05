@@ -28,7 +28,7 @@ jobs:
       - name: Validate Data Contract
         run: |
           # Change path to where your contract is actually stored
-          datacontract lint contracts/datacontract.yml
+          datacontract lint contract/datacontract.yml
       # --------------------------------------
 
       - name: setup databricks cli
