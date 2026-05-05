@@ -1,15 +1,15 @@
-id: 31dc0660-d7ee-478c-baed-446cafbb0dea
-pipeline_type: WORKSPACE
-name: demo_pipeline
-libraries:
-  - glob:
-      include: /Workspace/Users/emailisbena@gmail.com/New Pipeline 2026-05-05
-        09:39/transformations/**
-schema: orders_data
-continuous: false
-development: false
-photon: true
-channel: CURRENT
-catalog: data_contract_demo
-serverless: true
-root_path: /Workspace/Users/emailisbena@gmail.com/New Pipeline 2026-05-05 09:39
+resources:
+  pipelines:
+    demo_contract:
+      name: ${bundle.target}_dlt_contract
+      libraries:
+        - glob:
+            # This ensures all notebooks/files in src are included
+            include: ../src/contract/transformations/**
+            # Or use notebooks if that's what you're using:
+            # include: "../src/*.ipynb"
+      catalog: data_contract_demo
+      target: orders_data # This is the DLT 'schema' setting
+      photon: true
+      serverless: true
+      root_path: ../src/contract
