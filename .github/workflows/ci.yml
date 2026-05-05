@@ -47,5 +47,4 @@ jobs:
           DATABRICKS_HOST: ${{ vars.DAB_DEPLOY }}
           DATABRICKS_TOKEN: ${{ secrets.DAB_DEPLOY }}
         run: |
-          cd bundles
           databricks bundle validate -t lab
