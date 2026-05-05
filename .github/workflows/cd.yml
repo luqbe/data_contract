@@ -44,5 +44,5 @@ jobs:
           DATABRICKS_TOKEN: ${{ secrets.DAB_DEPLOY }}
         run: |
           cd bundles
-          databricks bundle validate -p lab -t lab
-          databricks bundle deploy -p lab -t lab --force
+          databricks bundle validate -t lab
+          databricks bundle deploy -t lab --force
