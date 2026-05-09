@@ -7,7 +7,7 @@ description: "Data contract for the orders table"
 servers:
   production:
     type: databricks
-    endpoint: "/sql/1.0/warehouses/a87b6d986e3818f7"
+    endpoint: "/sql/1.0/warehouses/a87b6d9*******"
     catalog: data_contract_demo
     schema: orders_data
 # ------------------------
